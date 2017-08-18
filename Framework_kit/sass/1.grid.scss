@@ -1,0 +1,276 @@
+/*
+** GRID
+******/
+
+body .#{$resetClass} * {
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/*
+** MAIN COLUMNS SETTINGS
+******/
+$mainColumns 	: (
+	'col-mn-12' : (
+		name 				: 'column-main-12',
+		width 				: 100%, 
+		background-color 	: #F0E68C,
+		padding				: 0 1rem
+	),
+	'col-mn-11' : (
+		name 				: 'column-main-11',
+		width 				: 91.6666%, 
+		background-color 	: #9370DB
+	),
+	'col-mn-10' : (
+		name 				: 'column-main-10',
+		width 				: 83.3333%, 
+		background-color 	: #6495ED
+	),
+	'col-mn-9' : (
+		name 				: 'column-main-9',
+		width 				: 75%, 
+		background-color 	: #DB7093
+	),
+	'col-mn-8' : (
+		name 				: 'column-main-8',
+		width 				: 66.6666%, 
+		background-color 	: #4682B4
+	),
+	'col-mn-7' : (
+		name 				: 'column-main-7',
+		width 				: 58.3333%, 
+		background-color 	: #FA8072
+	),
+	'col-mn-6' : (
+		name 				: 'column-main-6',
+		width 				: 50%, 
+		background-color 	: #20B2AA
+	),
+	'col-mn-5' : (
+		name 				: 'column-main-5',
+		width 				: 41.6666%, 
+		background-color 	: #FF8C00
+	),
+	'col-mn-4' : (
+		name 				: 'column-main-4',
+		width 				: 33.3333%, 
+		background-color 	: #3CB371
+	),
+	'col-mn-3' : (
+		name 				: 'column-main-3',
+		width 				: 25%, 
+		background-color 	: #DAA520
+	),
+	'col-mn-2' : (
+		name 				: 'column-main-2',
+		width 				: 16.6666%, 
+		background-color 	: #FFD700
+	),
+	'col-mn-1' : (
+		name 				: 'column-main-1',
+		width 				: 8.3333%, 
+		background-color 	: #DC143C
+	)
+);
+
+/*
+** CHILD COLUMNS SETTINGS
+******/
+$childColumns 	: (
+	'col-ch-10' : (
+		name 				: 'column-child-10',
+		width 				: 100%, 
+		background-color 	: #6495ED
+	),
+	'col-ch-9' : (
+		name 				: 'column-child-9',
+		width 				: 90%, 
+		background-color 	: #DB7093
+	),
+	'col-ch-8' : (
+		name 				: 'column-child-8',
+		width 				: 80%, 
+		background-color 	: #4682B4
+	),
+	'col-ch-7' : (
+		name 				: 'column-child-7',
+		width 				: 70%, 
+		background-color 	: #FA8072
+	),
+	'col-ch-6' : (
+		name 				: 'column-child-6',
+		width 				: 60%, 
+		background-color 	: #20B2AA
+	),
+	'col-ch-5' : (
+		name 				: 'column-child-5',
+		width 				: 50%, 
+		background-color 	: #FF8C00
+	),
+	'col-ch-4' : (
+		name 				: 'column-child-4',
+		width 				: 40%, 
+		background-color 	: #3CB371
+	),
+	'col-ch-3' : (
+		name 				: 'column-child-3',
+		width 				: 30%, 
+		background-color 	: #DAA520
+	),
+	'col-ch-2' : (
+		name 				: 'column-child-2',
+		width 				: 20%, 
+		background-color 	: #FFD700
+	),
+	'col-ch-1' : (
+		name 				: 'column-child-1',
+		width 				: 10%, 
+		background-color 	: #DC143C
+	)
+);
+
+@mixin columnsSettings() {
+	display: inline-block;
+	padding-left: 1rem;
+	vertical-align: middle;
+}
+
+
+.#{$resetClass} {
+
+	/*
+	** MAIN
+	******/
+	$cols : '';
+
+	@each $col, $value in $mainColumns {
+
+		$width 		      : map-get($value, width);
+		$background-color : map-get($value, background-color);
+		$padding 	      : map-get($value, padding);
+
+		.#{$col} {
+			width: $width;
+			padding: $padding;
+		}
+
+		$cols : '#{$cols}.#{$col},';
+	}
+
+	#{$cols} {
+		@include columnsSettings;
+	}
+
+	/*
+	** CHILD
+	******/
+	$cols : '';
+
+	@each $col, $value in $childColumns {
+
+		$width 		      : map-get($value, width);
+		$background-color : map-get($value, background-color);
+		$padding 	      : map-get($value, padding);
+
+		.#{$col} {
+			width: $width;
+			padding: $padding;
+		}
+
+		$cols : '#{$cols}.#{$col},';
+	}
+
+	#{$cols} {
+		@include columnsSettings;
+	}
+
+	.row {
+		
+		& {
+			margin-left: -1rem;
+			margin-right: 0;
+		}
+
+		.col-mn-12,
+		.col-ch-10 {
+			padding-right: 0;
+		}
+	}
+
+	.col-mn-left {
+		float: left;
+	}
+
+	.col-mn-right {
+		float: right;
+	}
+}
+
+@mixin debugSettings() {
+    color: #FFFFFF;
+    background: #111111;
+	text-transform: uppercase;
+	font-family: Arial;
+	font-size: 0.625rem;
+	vertical-align: top;
+	display: inline-block;
+	padding: 0.625rem;
+	margin-bottom: 1rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0.3;
+}
+
+.debug {
+
+	.#{$resetClass} {
+
+		$colsMain 	: '';
+		$colsChild 	: '';
+
+		@each $col, $value in $mainColumns {
+
+			$name 		      : map-get($value, name);
+			$background-color : map-get($value, background-color);
+
+			.#{$col} {
+				background-color: $background-color;
+				position: relative;
+			}
+
+			.#{$col}:before {
+				content: $name;
+			}
+
+			$colsMain : '#{$colsMain}.#{$col}:before,';
+		}
+
+		#{$colsMain} {
+			@include debugSettings;
+		}
+
+		@each $col, $value in $childColumns {
+
+			$name 		      : map-get($value, name);
+			$background-color : map-get($value, background-color);
+
+			.#{$col} {
+				background-color: $background-color;
+				position: relative;
+			}
+
+			.#{$col}:before {
+				content: $name;
+			}
+
+			$colsChild : '#{$colsChild}.#{$col}:before,';
+		}
+
+		#{$colsChild} {
+			@include debugSettings;
+		}
+	}
+}

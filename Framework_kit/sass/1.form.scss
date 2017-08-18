@@ -1,0 +1,121 @@
+/*
+** FORM
+******/
+
+/*
+** FIELDS SETTINGS
+******/
+
+$fields    : (
+    'field-12' : (
+        width   : 100%, 
+        padding : 0 1rem
+    ),
+    'field-11' : (
+        width   : 91.6666%
+    ),
+    'field-10' : (
+        width   : 83.3333%
+    ),
+    'field-9' : (
+        width   : 75%
+    ),
+    'field-8' : (
+        width   : 66.6666%
+    ),
+    'field-7' : (
+        width   : 58.3333%
+    ),
+    'field-6' : (
+        width   : 50%
+    ),
+    'field-5' : (
+        width   : 41.6666%
+    ),
+    'field-4' : (
+        width   : 33.3333%
+    ),
+    'field-3' : (
+        width   : 25%
+    ),
+    'field-2' : (
+        width   : 16.6666%
+    ),
+    'field-1' : (
+        width   : 8.3333%
+    )
+);
+
+@mixin fieldsSettings() {
+    display: inline-block;
+    padding: 0 0 0 1rem;
+    margin-bottom: 1rem;
+    vertical-align: middle;
+}
+
+
+.#{$resetClass} {
+
+    @each $field, $value in $fields {
+
+        $width      : map-get($value, width);
+        $padding    : map-get($value, padding);
+
+        .#{$field} {
+            width: $width;
+            padding: $padding;
+
+            @include fieldsSettings;
+        }
+
+        .#{$field} input[type=text],
+        .#{$field} input[type=password],
+        .#{$field} input[type=tel],
+        .#{$field} select {
+            width:100%;
+            display:table-cell;
+            padding:8px;
+            border:0;
+            background:transparent;
+            outline:none;
+        }
+
+        .#{$field} input[type=submit],
+        .#{$field} input[type=button],
+        .#{$field} button,
+        .#{$field} textarea {
+            width:100%;
+            display:table-cell;
+            padding:7px 8px;
+            border:0;
+            margin:0;
+            background:transparent;
+        }
+    }
+
+    .form {
+
+        & {
+            width: 100%;
+            display: block;
+        }
+
+        .group {
+            & {
+                width:100%;
+                display:inline-table;
+            }
+
+            .addon {
+                width:1%;
+                white-space:nowrap;
+                display:table-cell;
+                vertical-align:middle;
+            }
+        }
+
+        .field-row {
+            margin-left: -1rem;
+        }
+    }
+}
