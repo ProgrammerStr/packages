@@ -1,0 +1,277 @@
+// * CORE PREFIX ======================= */
+@mixin prefixer($property, $value) {
+	-webkit-#{$property}: #{$value};
+	 -khtml-#{$property}: #{$value};
+	   -moz-#{$property}: #{$value};
+	    -ms-#{$property}: #{$value};
+	     -o-#{$property}: #{$value};
+	        #{$property}: #{$value};
+}
+
+
+/* FUNCTIONS ================== */
+@function calcRem($value) {
+	@if type-of($value) == "number" {
+		@if unit($value) == "" {
+			@return $value / 16 + rem;
+		} @else {
+			@return $value;
+		}
+	} @else {
+		@return $value;
+	}
+}
+
+//* BREAKPOINTS ================ */
+$breaks: (
+	"tablet": 900px,
+	 "phone-2" : 550px,
+	 "phone": 400px
+);
+
+//* VARS ================== */
+$preto  : #000;
+$branco : #fff;
+
+// ELEMENTS ======================================================  */
+
+// POSITION
+@mixin position($type: relative, $top: auto, $left: auto, $right: auto, $bottom: auto) {
+	position: $type;
+	top: calcRem($top);
+	left: calcRem($left);
+	right: calcRem($right);
+	bottom: calcRem($bottom);
+}
+
+// MARGINS
+
+// MARGIN 1 PARAM
+@mixin margin($direction, $value, $other: 0) {
+	@if $direction == 'v' {
+		margin: calcRem($other) calcRem($value);
+	} @else if $direction == 'h' {
+		margin: calcRem($value) calcRem($other);
+	} @else {
+		margin-#{$direction}: calcRem($value);
+	}
+}
+
+// MARGIN ALL PARAMS
+@mixin margin-all($top: null, $right: null, $bottom: null, $left: null) {
+		margin-top: calcRem($top);
+		margin-left: calcRem($left);
+		margin-right: calcRem($right);
+		margin-bottom: calcRem($bottom);
+}
+
+// PADDING 1 PARAM
+@mixin padding($direction, $value, $other: 0) {
+	@if $direction == 'v' {
+		padding: calcRem($other) calcRem($value);
+	} @else if $direction == 'h' {
+		padding: calcRem($value) calcRem($other);
+	} @else {
+		padding-#{$direction}: calcRem($value);
+	}
+}
+
+// PADDING ALL PARAMS
+@mixin padding-all($top: null, $right: null, $bottom: null, $left: null) {
+		padding-top: calcRem($top);
+		padding-left: calcRem($left);
+		padding-right: calcRem($right);
+		padding-bottom: calcRem($bottom);
+}
+
+// FLEXBOX - CORE: PREFIXER
+@mixin flexbox($display: flex){
+	@include prefixer('display', $display);
+}
+
+// ALIGN-ITEMS - CORE PREFIXER
+@mixin align-items($align) {
+	  @include prefixer('align-items', $align);
+}
+
+// JUSTIFY-CONTENT - CORE PREFIXER
+@mixin justify-content($space) {
+    @include prefixer('justify-content', $space);
+}
+
+
+// BODER RADIUS |MORE PARAMS| - CORE PREFIXER
+@mixin radius-all($top, $left, $botton, $right) {
+		@include prefixer('border-radius', calcRem($top) calcRem($left) calcRem($botton) calcRem($right));
+}
+
+// BORDER READIUS - CORE PREFIXER
+@mixin radius($radius) {
+	@include prefixer('border-radius', calcRem($radius));
+}
+
+// PSEUDO ELEMENT - ::after or ::before
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+     content: $content;
+     display: $display;
+    position: $pos;
+}
+
+// BOX-SIZING
+@mixin box-sizing($type: border-box) {
+  @include prefixer('box-sizing', $type);
+}
+
+// CREATE A TRIAGULE BODER
+@mixin css-triangle($color, $direction, $size: 6px, $position: absolute, $round: false){
+    @include pseudo($pos: $position);
+    width: 0;
+    height: 0;
+    @if $round {
+        border-radius: 3px;
+    }
+    @if $direction == down {
+        border-left: $size solid transparent;
+        border-right: $size solid transparent;
+        border-top: $size solid $color;
+        margin-top: 0 - round( $size / 2.5 );
+    } @else if $direction == up {
+        border-left: $size solid transparent;
+        border-right: $size solid transparent;
+        border-bottom: $size solid $color;
+        margin-bottom: 0 - round( $size / 2.5 );
+    } @else if $direction == right {
+        border-top: $size solid transparent;
+        border-bottom: $size solid transparent;
+        border-left: $size solid $color;
+        margin-right: -$size;
+    } @else if  $direction == left {
+        border-top: $size solid transparent;
+        border-bottom: $size solid transparent;
+        border-right: $size solid $color;
+        margin-left: -$size;
+    }
+}
+
+// OPACITY - COMP IE8
+@mixin opacity($opacity) {
+	opacity: $opacity;
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+// ALL PROPERTYS FOR BACKGROUND
+@mixin background-all($color, $image: none, $positions: top center, $size: initial, $repeat: no-repeat, $attachment: initial) {
+	     background-color: $color;
+	     background-image: $image;
+	  background-position: $positions;
+	      background-size: $size;
+	    background-repeat: $repeat;
+	background-attachment: $attachment;
+}
+
+// BOX SHADOW - CORE PREFIXER
+@mixin box-shadow-all($horizontal, $vertical, $blur, $radius, $color: rgba(0, 0, 0, 0.70), $direction: default) {
+	@if $direction == inset {
+			@include prefixer('box-shadow', inset
+																			calcRem($horizontal)
+																			calcRem($vertical)
+																			calcRem($blur)
+																			calcRem($radius)
+																			$color);
+	} @else {
+		  @include prefixer('box-shadow', calcRem($horizontal)
+																			calcRem($vertical)
+																			calcRem($blur)
+																			calcRem($radius)
+																			$color)
+	}
+}
+
+// TEXT-SHADOW
+@mixin text-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4)) {
+    text-shadow: $x $y $blur $color;
+}
+
+// ANIMATIONS ============================================ */
+
+// TRANSITION - CORE PREFIXER
+@mixin transitions ($attr, $time: 0.3s, $tipe: ease) {
+		@include prefixer('transition', $attr $time $tipe);
+}
+
+// ROTATE - CORE PREFIXER - COMP IE8
+@mixin rotate($deg: 0, $m11: 0, $m12: 0, $m21: 0, $m22: 0) {
+  @include prefixer('transform', rotate($deg + deg));
+  filter: progid:DXImageTransform.Microsoft.Matrix(
+       M11=#{$m11}, M12=#{$m12}, M21=#{$m21}, M22=#{$m22}, sizingMethod='auto expand');
+    zoom: 1;
+}
+
+// TRANSFORM - CORE PREFIXER
+@mixin transform($params) {
+	@include prefixer('transform', $params);
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($content) {
+	@include prefixer('animations', $content);
+}
+
+// STYLE FOR PRIMARY BOX
+@mixin total() {
+	width: 100%;
+	float: left;
+}
+
+// DISPLAY BOX
+@mixin box-display($size) {
+	         width: $size;
+	       display: inline-block;
+	vertical-align: middle;
+	     font-size: 0;
+}
+
+// ALL STYLE FOR FONTS
+@mixin fontGeneral($size, $color, $style, $weigth) {
+	  font-size: $size / 16 + rem;
+	      color: $color;
+	 font-style: $style;
+	font-weight: $weigth;
+}
+
+// MEDIA QUERYS BREAKPOINT ======================================== */
+
+// MEDIA 1 PARAM - MAX OR MIN: defult: media screen and (max-width: $width)
+@mixin breakpoint($width, $type: max) {
+	@if map_has_key($breaks, $width) {
+		$width: map_get($breaks, $width);
+	}
+	@media screen and (#{$type}-width: $width) {
+		@content;
+	}
+}
+
+// MEDIA 2 PARAMs - MAX AND MIN
+@mixin breakpoint-all($max, $min) {
+	@media screen and (max-width: $max) and (min-width: $min) {
+		@content;
+	}
+}
