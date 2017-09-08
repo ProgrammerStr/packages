@@ -1,0 +1,18 @@
+// MEDIA QUERYS BREAKPOINT ======================================== */
+
+// MEDIA 1 PARAM - MAX OR MIN: defult: media screen and (max-width: $width)
+@mixin breakpoint($width, $type: max) {
+	@if map_has_key($breaks, $width) {
+		$width: map_get($breaks, $width);
+	}
+	@media screen and (#{$type}-width: $width) {
+		@content;
+	}
+}
+
+// MEDIA 2 PARAMs - MAX AND MIN
+@mixin breakpoint-all($max, $min) {
+	@media screen and (max-width: $max) and (min-width: $min) {
+		@content;
+	}
+}

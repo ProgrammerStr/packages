@@ -1,0 +1,23 @@
+// * CORE PREFIX ======================= */
+@mixin prefixer($property, $value) {
+	-webkit-#{$property}: #{$value};
+	 -khtml-#{$property}: #{$value};
+	   -moz-#{$property}: #{$value};
+	    -ms-#{$property}: #{$value};
+	     -o-#{$property}: #{$value};
+	        #{$property}: #{$value};
+}
+
+
+/* FUNCTIONS ================== */
+@function calcRem($value) {
+	@if type-of($value) == "number" {
+		@if unit($value) == "" {
+			@return $value / 16 + rem;
+		} @else {
+			@return $value;
+		}
+	} @else {
+		@return $value;
+	}
+}

@@ -1,0 +1,41 @@
+// ANIMATIONS ============================================ */
+
+// TRANSITION - CORE PREFIXER
+@mixin transitions ($attr, $time: 0.3s, $tipe: ease) {
+		@include prefixer('transition', $attr $time $tipe);
+}
+
+// ROTATE - CORE PREFIXER - COMP IE8
+@mixin rotate($deg: 0, $m11: 0, $m12: 0, $m21: 0, $m22: 0) {
+  @include prefixer('transform', rotate($deg + deg));
+  filter: progid:DXImageTransform.Microsoft.Matrix(
+       M11=#{$m11}, M12=#{$m12}, M21=#{$m21}, M22=#{$m22}, sizingMethod='auto expand');
+    zoom: 1;
+}
+
+// TRANSFORM - CORE PREFIXER
+@mixin transform($params) {
+	@include prefixer('transform', $params);
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($content) {
+	@include prefixer('animations', $content);
+}

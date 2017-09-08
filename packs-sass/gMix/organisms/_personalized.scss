@@ -1,0 +1,21 @@
+// STYLE FOR PRIMARY BOX
+@mixin total() {
+	width: 100%;
+	float: left;
+}
+
+// DISPLAY BOX
+@mixin box-display($size) {
+	         width: $size;
+	       display: inline-block;
+	vertical-align: middle;
+	     font-size: 0;
+}
+
+// ALL STYLE FOR FONTS
+@mixin fontGeneral($size, $color, $style, $weigth) {
+	  font-size: $size / 16 + rem;
+	      color: $color;
+	 font-style: $style;
+	font-weight: $weigth;
+}
